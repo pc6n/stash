@@ -18,26 +18,37 @@ function ClipboardHistory() {
     const saved = localStorage.getItem('clipboardHistory');
     return saved ? JSON.parse(saved) : [];
   });
+  const [maxItems, setMaxItems] = useState(50);
   const [query, setQuery] = useState('');
   const { copy, snackbar } = useClipboardCopy();
 
   useEffect(() => {
-    localStorage.setItem('clipboardHistory', JSON.stringify(history));
-  }, [history]);
+    window.electron.settings.get().then((s) => setMaxItems(s.maxClipboardHistory));
+    const unsub = window.electron.ipcRenderer.on('settings:changed', (s) => {
+      setMaxItems(s.maxClipboardHistory);
+    });
+    return () => unsub();
+  }, []);
+
+  useEffect(() => {
+    const trimmed = history.slice(0, maxItems);
+    localStorage.setItem('clipboardHistory', JSON.stringify(trimmed));
+    if (trimmed.length < history.length) setHistory(trimmed);
+  }, [history, maxItems]);
 
   useEffect(() => {
     const interval = setInterval(() => {
       try {
         const text = window.electron.clip.read();
         if (text && !history.includes(text)) {
-          setHistory((prev) => [text, ...prev]);
+          setHistory((prev) => [text, ...prev].slice(0, maxItems));
         }
       } catch {
         /* silent */
       }
     }, 1000);
     return () => clearInterval(interval);
-  }, [history]);
+  }, [history, maxItems]);
 
   const filtered = query
     ? history.filter((e) => e.toLowerCase().includes(query.toLowerCase()))

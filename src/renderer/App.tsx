@@ -8,6 +8,7 @@ import OpenInFullIcon from '@mui/icons-material/OpenInFull';
 import ClipboardHistory from './ClipboardHistory';
 import SideMenu from './SideMenu';
 import ShellCommands from './ShellCommands';
+import Settings from './Settings';
 import './App.css';
 
 const theme = createTheme({
@@ -145,6 +146,7 @@ function App() {
               <Routes>
                 <Route path="/" element={<ClipboardHistory />} />
                 <Route path="/shell" element={<ShellCommands />} />
+                <Route path="/settings" element={<Settings />} />
               </Routes>
             </Box>
           </Box>

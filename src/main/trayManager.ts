@@ -1,9 +1,9 @@
 import { app, BrowserWindow, clipboard, Menu, shell, Tray } from 'electron';
 import { getCommands, removeCommandByIndex } from './commandsStore';
+import { getSettings } from './settingsStore';
 
 let tray: Tray | null = null;
 let clipboardHistory: string[] = [];
-const MAX_HISTORY_SIZE = 9;
 const POLL_INTERVAL_MS = 1000;
 
 let getMainWindow: () => BrowserWindow | null = () => null;
@@ -125,7 +125,8 @@ export function startClipboardPolling(): void {
     if (clipboardHistory.length && clipboardHistory[0] === text) return;
 
     clipboardHistory.unshift(text);
-    clipboardHistory = clipboardHistory.slice(0, MAX_HISTORY_SIZE);
+    const max = Math.min(getSettings().maxClipboardHistory, 20);
+    clipboardHistory = clipboardHistory.slice(0, max);
     updateContextMenu();
   }, POLL_INTERVAL_MS);
 }

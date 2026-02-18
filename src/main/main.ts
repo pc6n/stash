@@ -13,6 +13,7 @@ import log from 'electron-log';
 import MenuBuilder from './menu';
 import { resolveHtmlPath } from './util';
 import { loadCommands, registerCommandsIPC } from './commandsStore';
+import { loadSettings, registerSettingsIPC } from './settingsStore';
 import {
   createTray,
   startClipboardPolling,
@@ -154,7 +155,9 @@ app
   .whenReady()
   .then(async () => {
     await loadCommands();
+    await loadSettings();
     registerCommandsIPC(updateContextMenu);
+    registerSettingsIPC(() => mainWindow);
     registerWindowIPC();
     createTray(getAssetPath('tray-iconTemplate.png'), () => mainWindow, createWindow);
     startClipboardPolling();

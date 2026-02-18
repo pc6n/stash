@@ -5,7 +5,11 @@ import { contextBridge, ipcRenderer, IpcRendererEvent } from 'electron';
 // eslint-disable-next-line import/no-duplicates
 import { clipboard } from 'electron';
 
-export type Channels = 'ipc-example' | 'commands:changed' | 'navigate';
+export type Channels =
+  | 'ipc-example'
+  | 'commands:changed'
+  | 'settings:changed'
+  | 'navigate';
 
 const electronHandler = {
   ipcRenderer: {
@@ -40,6 +44,11 @@ const electronHandler = {
     add: (cmd: { command: string; description: string }) =>
       ipcRenderer.invoke('commands:add', cmd),
     remove: (index: number) => ipcRenderer.invoke('commands:remove', index),
+  },
+  settings: {
+    get: () => ipcRenderer.invoke('settings:get'),
+    update: (partial: Record<string, unknown>) =>
+      ipcRenderer.invoke('settings:update', partial),
   },
 };
 

@@ -9,6 +9,7 @@ import {
 import { Link, useLocation } from 'react-router-dom';
 import ContentPasteIcon from '@mui/icons-material/ContentPaste';
 import TerminalIcon from '@mui/icons-material/Terminal';
+import SettingsIcon from '@mui/icons-material/Settings';
 
 interface SideMenuProps {
   width: number;
@@ -19,6 +20,7 @@ interface SideMenuProps {
 const ITEMS = [
   { label: 'Clipboard', icon: ContentPasteIcon, to: '/' },
   { label: 'Commands', icon: TerminalIcon, to: '/shell' },
+  { label: 'Settings', icon: SettingsIcon, to: '/settings' },
 ];
 
 function SideMenu({ width, open, setOpen }: SideMenuProps) {
