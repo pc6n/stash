@@ -6,6 +6,17 @@ Lightweight clipboard history and command manager that lives in your menu bar. B
 
 Grab the latest `.dmg` from [GitHub Releases](https://github.com/pc6n/stash/releases).
 
+### macOS Gatekeeper
+
+Because the app is not signed with an Apple Developer certificate, macOS will show a warning on first launch. To open it:
+
+1. **Right-click** (or Control-click) on **Stash.app** and choose **Open**
+2. In the dialog click **Open** to confirm
+
+Alternatively: **System Settings → Privacy & Security** → scroll down to the blocked app and click **Open Anyway**.
+
+You only need to do this once -- subsequent launches work normally.
+
 ## Features
 
 - **Clipboard History** -- automatically tracks copied text, searchable and one-click re-copy
