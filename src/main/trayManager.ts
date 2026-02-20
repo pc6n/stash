@@ -83,6 +83,13 @@ function buildAppItems(): Electron.MenuItemConstructorOptions[] {
       click: showAndFocusWindow,
     },
     {
+      label: 'Settings...',
+      click: () => {
+        showAndFocusWindow();
+        getMainWindow()?.webContents.send('navigate', '/settings');
+      },
+    },
+    {
       label: 'About',
       click: () => shell.openExternal('https://github.com/pc6n/stash'),
     },
