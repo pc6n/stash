@@ -15,6 +15,12 @@ Because the app is not signed with an Apple Developer certificate, macOS will sh
 
 Alternatively: **System Settings → Privacy & Security** → scroll down to the blocked app and click **Open Anyway**.
 
+Or remove the quarantine flag via Terminal:
+
+```bash
+xattr -cr /Applications/Stash.app
+```
+
 You only need to do this once -- subsequent launches work normally.
 
 ## Features
