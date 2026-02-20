@@ -2,6 +2,12 @@
 
 Lightweight clipboard history and command manager that lives in your menu bar. Built with Electron, React and TypeScript.
 
+<p align="center">
+  <img src="assets/screenshots/app-window.png" alt="Stash – App Window" width="280" />
+  &nbsp;&nbsp;&nbsp;&nbsp;
+  <img src="assets/screenshots/tray-menu.png" alt="Stash – Tray Menu" width="280" />
+</p>
+
 ## Download
 
 Grab the latest `.dmg` from [GitHub Releases](https://github.com/pc6n/stash/releases).
