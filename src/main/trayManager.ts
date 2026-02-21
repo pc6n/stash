@@ -29,6 +29,33 @@ function buildClipboardItems(): Electron.MenuItemConstructorOptions[] {
   }));
 }
 
+function buildHistoryManagement(): Electron.MenuItemConstructorOptions[] {
+  if (clipboardHistory.length === 0) return [];
+
+  const removeItems: Electron.MenuItemConstructorOptions[] =
+    clipboardHistory.map((item, idx) => ({
+      label: `${idx} - ${item.substring(0, 50)}`,
+      click: () => {
+        clipboardHistory.splice(idx, 1);
+        updateContextMenu();
+      },
+    }));
+
+  return [
+    {
+      label: 'Remove History Item',
+      submenu: removeItems,
+    },
+    {
+      label: 'Clear History',
+      click: () => {
+        clipboardHistory = [];
+        updateContextMenu();
+      },
+    },
+  ];
+}
+
 function buildCommandSubmenu(): Electron.MenuItemConstructorOptions {
   const commands = getCommands();
 
@@ -103,9 +130,12 @@ function buildAppItems(): Electron.MenuItemConstructorOptions[] {
 
 export function updateContextMenu(): void {
   if (!tray) return;
+  const historyMgmt = buildHistoryManagement();
   const template: Electron.MenuItemConstructorOptions[] = [
     ...buildClipboardItems(),
     { type: 'separator' },
+    ...historyMgmt,
+    ...(historyMgmt.length > 0 ? [{ type: 'separator' as const }] : []),
     buildCommandSubmenu(),
     { type: 'separator' },
     ...buildAppItems(),
