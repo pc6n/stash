@@ -1,34 +1,22 @@
-# Logs
-logs
-*.log
+# dependencies
+node_modules/
 
-# Runtime data
-pids
-*.pid
-*.seed
+# build
+dist/
+src-tauri/target/
+*.dmg
 
-# Coverage directory used by tools like istanbul
-coverage
-.eslintcache
+# tauri
+src-tauri/gen/
 
-# Dependency directory
-# https://www.npmjs.org/doc/misc/npm-faq.html#should-i-check-my-node_modules-folder-into-git
-node_modules
-
-# OSX
+# OS
 .DS_Store
+Thumbs.db
 
-release/app/dist
-release/build
-.erb/dll
+# IDE
+.idea/
+.vscode/
+.history/
 
-.idea
-npm-debug.log.*
-*.css.d.ts
-*.sass.d.ts
-*.scss.d.ts
-release/*
-!release/app
-release/app/*
-!release/app/package.json
-.history/*
+# logs
+*.log
