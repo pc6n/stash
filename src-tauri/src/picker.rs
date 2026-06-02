@@ -1,8 +1,18 @@
+use tauri::window::Color;
 use tauri::{AppHandle, Emitter, LogicalPosition, Manager, WebviewWindow};
 
 const PICKER_LABEL: &str = "picker";
 const SETTINGS_LABEL: &str = "settings";
 const CURSOR_OFFSET: f64 = 12.0;
+
+pub fn configure_picker_window(app: &AppHandle) -> Result<(), String> {
+    let window = get_picker(app)?;
+    window
+        .set_background_color(Some(Color(0, 0, 0, 0)))
+        .map_err(|e| e.to_string())?;
+    window.set_shadow(false).map_err(|e| e.to_string())?;
+    Ok(())
+}
 
 pub fn show_picker(app: &AppHandle) -> Result<(), String> {
     let window = get_picker(app)?;

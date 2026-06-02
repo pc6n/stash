@@ -15,6 +15,14 @@ body,
   background: transparent;
 }
 
+html.picker-window,
+html.picker-window body,
+html.picker-window #root {
+  background: transparent;
+  overflow: hidden;
+  border-radius: 12px;
+}
+
 body {
   -webkit-font-smoothing: antialiased;
 }

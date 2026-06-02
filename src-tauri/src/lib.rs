@@ -194,6 +194,7 @@ pub fn run() {
         ])
         .setup(move |app| {
             tray::setup(app.handle())?;
+            picker::configure_picker_window(app.handle())?;
             clipboard::start_clipboard_watcher(app.handle().clone(), store.clone());
             shortcuts::register_shortcuts(app.handle(), store.clone())?;
             Ok(())

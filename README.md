@@ -86,7 +86,7 @@ src-tauri/src/
   shortcuts.rs       # Global shortcut registration
 ```
 
-## License
+## License 
 
 MIT — see [LICENSE](LICENSE).
 
