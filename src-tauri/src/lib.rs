@@ -203,8 +203,10 @@ pub fn run() {
         .expect("error building tauri application")
         .run(|app, event| {
             match event {
-                RunEvent::ExitRequested { api, .. } => {
-                    api.prevent_exit();
+                RunEvent::ExitRequested { api, code, .. } => {
+                    if code.is_none() {
+                        api.prevent_exit();
+                    }
                 }
                 RunEvent::WindowEvent {
                     label,
@@ -213,6 +215,16 @@ pub fn run() {
                 } if label == "picker" => {
                     if let Some(w) = app.get_webview_window("picker") {
                         let _ = w.hide();
+                    }
+                }
+                RunEvent::WindowEvent {
+                    label,
+                    event: tauri::WindowEvent::Focused(false),
+                    ..
+                } if label == "settings" => {
+                    #[cfg(target_os = "macos")]
+                    {
+                        let _ = app.set_activation_policy(tauri::ActivationPolicy::Accessory);
                     }
                 }
                 _ => {}

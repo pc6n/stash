@@ -45,9 +45,24 @@ pub fn show_settings(app: &AppHandle) -> Result<(), String> {
     let window = app
         .get_webview_window(SETTINGS_LABEL)
         .ok_or("settings window missing")?;
-    window.center().map_err(|e| e.to_string())?;
+
+    #[cfg(target_os = "macos")]
+    {
+        app.set_activation_policy(tauri::ActivationPolicy::Regular)
+            .map_err(|e| e.to_string())?;
+        app.show().map_err(|e| e.to_string())?;
+    }
+
+    if window.is_minimized().unwrap_or(false) {
+        window.unminimize().map_err(|e| e.to_string())?;
+    }
+
     window.show().map_err(|e| e.to_string())?;
+    window.center().map_err(|e| e.to_string())?;
+    let _ = window.set_always_on_top(true);
     window.set_focus().map_err(|e| e.to_string())?;
+    let _ = window.set_always_on_top(false);
+
     Ok(())
 }
 
