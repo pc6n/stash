@@ -22,6 +22,7 @@ export default function Picker() {
   const [activeIndex, setActiveIndex] = useState(0);
   const [pasteOnSelect, setPasteOnSelect] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
+  const listRef = useRef<HTMLDivElement>(null);
 
   const loadItems = useCallback(async (q: string) => {
     const list = await invoke<PickerItem[]>('get_picker_items', { query: q });
@@ -49,6 +50,7 @@ export default function Picker() {
       setFilter('all');
       loadItems('');
       inputRef.current?.focus();
+      if (listRef.current) listRef.current.scrollTop = 0;
     });
     const unlistenSettings = listen<AppSettings>('settings:changed', (e) => {
       setPasteOnSelect(e.payload.pasteOnSelect ?? false);
@@ -130,7 +132,7 @@ export default function Picker() {
             </button>
           </div>
         </div>
-        <div className={styles.list}>
+        <div className={styles.list} ref={listRef}>
           {visibleItems.length === 0 ? (
             <p className={styles.empty}>
               {filter === 'commands' ? 'No commands' : 'No matches'}
